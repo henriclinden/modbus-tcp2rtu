@@ -6,7 +6,7 @@ edition = "2024"
 [dependencies]
 clap = { version = "4.5.60", features = ["derive"] }
 tokio = { version = "1.49.0", features = ["full"] }
-tokio-modbus = { version = "0.17.0", features = ["server", "tcp", "tcp-server"] }
+tokio-modbus = { version = "0.17.0", features = ["server", "tcp", "tcp-server", "rtu", "rtu-server"] }
 tokio-serial = "5.4.5"
 tracing = "0.1.44"
 tracing-subscriber = { version = "0.3.22", features = ["env-filter"] }
