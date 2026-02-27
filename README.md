@@ -1,6 +1,6 @@
 # Modbus TCP to RTU Bridge
 
-This gateway acts as a transparent middleware that allows Modbus TCP Clients (Masters) to communicate with Modbus RTU Slaves over a network. It handles the translation between the two protocols by reframing the Protocol Data Unit (PDU) in real-time.
+This gateway acts as a transparent middleware that allows Modbus TCP Clients (Masters) to communicate with Modbus RTU Serverss (Slaves) over a network. It handles the translation between the two protocols by reframing the Protocol Data Unit (PDU) in real-time.
 
 <img src="img/drawing.png" width="60%" alt="Modbus Gateway Diagram">
 
