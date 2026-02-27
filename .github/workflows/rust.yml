@@ -1,6 +1,7 @@
 name: Rust
 
 on:
+  workflow_dispatch: # This enables the manual button
   push:
     branches: [ "main" ]
   pull_request:
