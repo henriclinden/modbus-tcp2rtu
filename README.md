@@ -8,3 +8,6 @@ You can start the bridge right away. The default properties will bind the TCP se
     # Run with custom arguments
     cargo run --release -- --tcp-bind 0.0.0.0:5020 --serial-port /dev/ttyUSB1 --baud-rate 115200
 
+To get detailed information when running, change the log level using the RUST_LOG environment variable.
+
+    RUST_LOG=debug cargo run --bin modbus-tcp2rtu
