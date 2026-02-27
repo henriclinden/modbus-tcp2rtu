@@ -1,12 +1,30 @@
 # Modbus TCP to RTU Bridge
 
+This gateway acts as a transparent middleware that allows Modbus TCP Clients (Masters) to communicate with Modbus RTU Slaves over a network. It is a "bridge" between two worlds: the modern Ethernet-based Modbus TCP and the legacy serial-based Modbus RTU. It handles the translation between the two protocols by reframing the Protocol Data Unit (PDU) in real-time.
+
+<img src="img/drawing.png" width="60%" alt="Modbus Gateway Diagram">
+
+The gateway listens for incoming TCP connections. When a packet is received, it performs a "strip-and-wrap" process to convert the message format:
+
+- De-encapsulation: It strips the MBAP Header (7 bytes) from the incoming Modbus TCP frame.
+- Identification: It extracts the Unit ID from the MBAP header to use as the RTU Slave Address.
+- Reframing: It appends a 16-bit CRC (Cyclic Redundancy Check) to the end of the PDU.
+- Transmission: The resulting RTU frame is sent over the serial line to the physical hardware.
+
+## Build
+The bridge is written in Rust and compiled using Cargo.
+
+    cargo build
+
+This will build the bridge and the two test applications.
+
 ## Run Instructions
-You can start the bridge right away. The default properties will bind the TCP server to port 5020, use /dev/ttyUSB0 as the serial port, and 9600 as the baud rate.
+You can start the bridge right away. The default properties will bind the TCP server to port 5020, use /dev/ttyUSB0 as the serial port, and 115200 as the baud rate.
 
     # Run with defaults
-    cargo run --release
+    cargo run --release --bin modbus-tcp2rtu
     # Run with custom arguments
-    cargo run --release -- --tcp-bind 0.0.0.0:5020 --serial-port /dev/ttyUSB1 --baud-rate 115200
+    cargo run --release --bin modbus-tcp2rtu -- --tcp-bind 0.0.0.0:5020 --serial-port /dev/ttyUSB0 --baud-rate 115200
 
 To get detailed information when running, change the log level using the RUST_LOG environment variable.
 
