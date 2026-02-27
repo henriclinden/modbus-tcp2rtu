@@ -4,7 +4,21 @@
 
 This gateway acts as a transparent middleware that allows Modbus TCP Clients (Masters) to communicate with Modbus RTU Serverss (Slaves) over a network. It handles the translation between the two protocols by reframing the Protocol Data Unit (PDU) in real-time.
 
-<img src="img/drawing.png" width="60%" alt="Modbus Gateway Diagram">
+```text
+       MODBUS TCP                                             MODBUS RTU
+    +--------------+              GATEWAY                 +---------------+
+    |              |         +---------------+            |               |
+    |  TCP CLIENT  | ------> |  [MBAP PDU]   | ---------> |   RTU SERVER  |
+    |   (Master)   |   TCP   |       |       |   RS485    |   (Device)    |
+    |              |         |   (Strip)     |   Serial   |               |
+    +--------------+         |       v       |            +---------------+
+                             |   [ PDU ]     | 
+                             |       |       | 
+                             |    (Wrap)     | 
+                             |       v       | 
+                             |  [ID PDU CRC] | 
+                             +---------------+
+```
 
 The gateway listens for incoming TCP connections. When a packet is received, it performs a "strip-and-wrap" process to convert the message format:
 
